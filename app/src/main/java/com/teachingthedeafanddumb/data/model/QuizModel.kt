@@ -1,4 +1,6 @@
-package com.teachingthedeafanddumb.data
+package com.teachingthedeafanddumb.data.model
+
+import java.io.Serializable
 
 data class QuizModel(
     val id: Int?=0,
@@ -8,5 +10,5 @@ data class QuizModel(
     val optionThree: String?="",
     val correctOption: Int?=0
 
-)
+): Serializable
 

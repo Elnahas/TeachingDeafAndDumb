@@ -4,4 +4,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="submit">submit</string>
     <string name="finish">finish</string>
+    <string name="enter_6_digit_code">Enter 6 digit code</string>
+    <string name="verify_number">verify number</string>
+    <string name="waiting_to_automatically_detect_an_sms_send_to">Waiting to automatically detect an sms send to</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="full_name">Full Name</string>
+    <string name="sign_up">Sign Up</string>
 </resources>

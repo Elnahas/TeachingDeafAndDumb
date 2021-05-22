@@ -1,14 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.main.otp.OtpFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:minHeight="?attr/actionBarSize"
+        app:contentInsetStartWithNavigation="0dp"
+        app:navigationIcon="@drawable/ic_back_black"/>
 
-</FrameLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/img_otp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_phone_otp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        android:layout_marginTop="@dimen/app_margin"/>
+
+    <LinearLayout
+        android:id="@+id/layout_code_verify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/img_otp"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="@dimen/app_margin">
+
+        <TextView
+            android:id="@+id/txt_phone_verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="@dimen/app_small_margin"
+            android:textColor="@color/colorBlack"
+            android:textSize="@dimen/normalText"
+            android:text="verify +20100000000"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <TextView
+            android:id="@+id/txt_note_automatically_send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/smallText"
+            android:gravity="center"
+            android:layout_margin="@dimen/app_small_margin"
+            tools:text="Waiting to automatically detect an sms send to +201066768111.Wrong number"
+            app:layout_constraintTop_toBottomOf="@+id/register_text_enter_code"/>
+
+        <EditText
+            android:id="@+id/edt_otp"
+            style="@style/editText"
+            android:layout_width="100dp"
+            android:autofillHints=""
+            android:maxLength="6"
+            android:gravity="center"
+            android:hint="- - - - - -"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/register_text_we_sent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/enter_6_digit_code"/>
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

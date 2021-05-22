@@ -144,11 +144,11 @@ dependencies {
 
 
     //Firebase
-    implementation 'com.google.firebase:firebase-auth:19.3.1'
-    implementation 'com.google.firebase:firebase-database:19.3.1'
-    implementation 'com.google.firebase:firebase-messaging:20.2.1'
+    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.firebase:firebase-database:20.0.0'
+    implementation 'com.google.firebase:firebase-messaging:22.0.0'
     implementation 'com.firebaseui:firebase-ui-database:6.2.1'
-    implementation 'com.google.firebase:firebase-storage:19.1.1'
+    implementation 'com.google.firebase:firebase-storage:20.0.0'
 
     //For can select image and cropper it
     api 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
@@ -180,8 +180,6 @@ dependencies {
     //lottie
     implementation 'com.airbnb.android:lottie:3.4.1'
 
-    implementation 'com.google.firebase:firebase-config:19.2.0'
-
     //For pdf online
     implementation 'es.voghdev.pdfviewpager:library:1.0.6'
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
@@ -193,7 +191,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database-ktx'
 
     implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:10.0.5'
-
+    //implementation "androidx.browser:browser:1.2.0"
 }
 
 apply plugin: 'com.google.gms.google-services'

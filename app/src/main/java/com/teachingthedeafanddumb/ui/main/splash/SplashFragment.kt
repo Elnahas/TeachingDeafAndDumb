@@ -1,60 +1,136 @@
 package com.teachingthedeafanddumb.ui.main.splash
 
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.gson.Gson
 import com.teachingthedeafanddumb.R
+import com.teachingthedeafanddumb.data.model.UserModel
+import com.teachingthedeafanddumb.other.Constants
+import com.teachingthedeafanddumb.other.Constants.FIRST_TIME_TOGGLE
+import com.teachingthedeafanddumb.ui.viewmodel.UserViewModel
+import com.teachingthedeafanddumb.utils.Resource
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class SplashFragment : Fragment(R.layout.fragment_splash) {
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SplashFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class SplashFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    val viewModel: UserViewModel by viewModels()
+    val auth = FirebaseAuth.getInstance()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    @Inject
+    lateinit var sharedPref: SharedPreferences
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash, container, false)
-    }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SplashFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SplashFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        requireActivity().window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+
+        Handler().postDelayed({
+
+            checkLoginUser()
+
+        }, 1000)
+
+        viewModel.isUserExistsMutableLiveData.observe(viewLifecycleOwner,
+            androidx.lifecycle.Observer {
+
+                when (it) {
+
+                    is Resource.Success -> {
+                        goToHomeActivity(it.data)
+                    }
+
+                    is Resource.Error -> {
+
+                        when (it.message) {
+
+                            Constants.KEY_NOT_EXISTS -> {
+                                auth.signOut()
+                                findNavController().navigate(R.id.loginFragment)
+                            }
+                            else -> {
+                                auth.signOut()
+                                findNavController().navigate(R.id.loginFragment)
+//                            findNavController().navigate(R.id.action_splashFragment_to_loginFragment)
+                            }
+                        }
+
+                    }
                 }
-            }
+            })
+
+    }
+
+
+    private fun checkLoginUser() {
+
+//        val FIRST_TIME_TOGGLE = sharedPref.getBoolean(FIRST_TIME_TOGGLE, false)
+//
+//        if (!FIRST_TIME_TOGGLE) {
+//            findNavController().navigate(R.id.action_splashFragment_to_introFragment)
+
+
+//        } else {
+
+            if (auth.currentUser != null) {
+
+                auth.currentUser?.let {
+                    it.phoneNumber?.let {
+                        viewModel.isUserExists(it)
+                    }
+                }
+
+            } else
+                requireActivity().findNavController(R.id.nav_host_fragment).navigate(
+                    R.id.action_splashFragment_to_loginFragment)
+
+
+//        }
+
+    }
+
+    private fun goToHomeActivity(userModel: UserModel?) {
+
+
+        //get data to save into pref
+        sharedPref.edit()
+            .putString(Constants.KEY_USER_MODEL_JSON, Gson().toJson(userModel))
+            .apply()
+
+        navigateFirstTabWithClearStack()
+
+
+
+    }
+
+
+    fun navigateFirstTabWithClearStack() {
+
+        val navController = Navigation.findNavController(requireActivity() , R.id.nav_host_fragment)
+        val navHostFragment: NavHostFragment =
+            requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.nav_graph_home)
+        graph.startDestination = R.id.homeFragment
+
+        navController.graph = graph
     }
 }

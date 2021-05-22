@@ -1,4 +1,4 @@
-package com.teachingthedeafanddumb.data
+package com.teachingthedeafanddumb.data.model
 
 import java.io.Serializable
 

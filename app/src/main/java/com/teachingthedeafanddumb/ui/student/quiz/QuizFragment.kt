@@ -1,25 +1,17 @@
 package com.teachingthedeafanddumb.ui.student.quiz
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.teachingthedeafanddumb.R
-import com.teachingthedeafanddumb.data.QuizModel
-import com.teachingthedeafanddumb.data.ResultModel
+import com.teachingthedeafanddumb.data.model.QuizModel
+import com.teachingthedeafanddumb.data.model.ResultModel
 import com.teachingthedeafanddumb.other.Constants.REF_RESULTS
 import com.teachingthedeafanddumb.utils.CustomLoading.Companion.hideProgressBar
 import com.teachingthedeafanddumb.utils.CustomLoading.Companion.showProgressBar
@@ -182,7 +174,8 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
                             showProgressBar(requireContext() , false)
 
                             //Send to Db Result
-                            val result = ResultModel()
+                            val result =
+                                ResultModel()
                             result.createAt = System.currentTimeMillis().toString()
                             result.resultCorrect = correct
                             result.resultMissed = missed

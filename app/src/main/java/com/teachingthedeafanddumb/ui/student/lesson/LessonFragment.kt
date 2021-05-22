@@ -2,7 +2,6 @@ package com.teachingthedeafanddumb.ui.student.lesson
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -10,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.teachingthedeafanddumb.R
-import com.teachingthedeafanddumb.data.QuizModel
 import kotlinx.android.synthetic.main.fragment_lesson.*
 
 

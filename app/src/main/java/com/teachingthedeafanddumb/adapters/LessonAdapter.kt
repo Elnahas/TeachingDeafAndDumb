@@ -11,8 +11,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.teachingthedeafanddumb.R
-import com.teachingthedeafanddumb.data.LessonModel
-import com.teachingthedeafanddumb.data.ResultModel
+import com.teachingthedeafanddumb.data.model.LessonModel
+import com.teachingthedeafanddumb.data.model.ResultModel
 import com.teachingthedeafanddumb.other.Constants
 import kotlinx.android.synthetic.main.item_lesson.view.*
 
