@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "509149704929",
+    "project_id": "teaching-the-deaf-and-dumb",
+    "storage_bucket": "teaching-the-deaf-and-dumb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509149704929:android:bbaa16c83fed6a9efebda0",
+        "android_client_info": {
+          "package_name": "com.teachingthedeafanddumb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509149704929-5cmml0uabnm074g1d0c2h2qjd5t6v2au.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.teachingthedeafanddumb",
+            "certificate_hash": "0bc2efd1e88e3b5c48482a74348abac878ab5483"
+          }
+        },
+        {
+          "client_id": "509149704929-0aesebsufdniikju3u2100h542dds11f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCik-upRN1G7lTLefKu0bttldQ88D5nNxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509149704929-0aesebsufdniikju3u2100h542dds11f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
