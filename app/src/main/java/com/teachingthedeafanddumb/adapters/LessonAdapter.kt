@@ -86,6 +86,7 @@ class LessonAdapter() : RecyclerView.Adapter<LessonAdapter.ViewHolder>() {
 
                     }
 
+
                     override fun onDataChange(snapshot: DataSnapshot) {
 
                         snapshot.children.forEach{
