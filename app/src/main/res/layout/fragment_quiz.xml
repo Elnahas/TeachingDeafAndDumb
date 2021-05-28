@@ -13,6 +13,13 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+
+        <ImageView
+            android:id="@+id/img_question"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:scaleType="fitXY"/>
+
         <TextView
             android:id="@+id/tv_question"
             android:layout_width="match_parent"
@@ -20,9 +27,9 @@
             android:layout_margin="10dp"
             android:fontFamily="@font/sans_bold"
             android:gravity="center"
-            android:text="Which internet company began life as an online bookstore called &#039;Cadabra&#039;?"
+            tools:text="Q"
             android:textColor="#363A43"
-            android:textSize="22sp"></TextView>
+            android:textSize="22sp"/>
 
         <LinearLayout
             android:id="@+id/ll_progress_details"
@@ -41,7 +48,7 @@
                 android:indeterminate="false"
                 android:max="10"
                 android:minHeight="50dp"
-                android:progress="0"></ProgressBar>
+                android:progress="0"/>
 
             <TextView
                 android:id="@+id/tv_progress"
@@ -51,7 +58,7 @@
                 android:padding="15dp"
                 android:textColorHint="#7A8089"
                 android:textSize="14sp"
-                tools:text="0/10"></TextView>
+                tools:text="0/10"/>
 
         </LinearLayout>
 
@@ -121,6 +128,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/imgC" />
 
+            <ImageView
+                android:id="@+id/imgD"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginTop="@dimen/low_margin"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_check_off"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imgC" />
+
+            <ImageView
+                android:id="@+id/chkD"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_check_off"
+                app:layout_constraintBottom_toBottomOf="@+id/imgD"
+                app:layout_constraintEnd_toStartOf="@+id/imgD"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imgD" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -134,7 +162,7 @@
             android:text="التالي"
             android:textColor="@android:color/white"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 

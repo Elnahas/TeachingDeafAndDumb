@@ -8,7 +8,9 @@ data class QuizModel(
     val optionOne: String?="",
     val optionTwo: String?="",
     val optionThree: String?="",
-    val correctOption: Int?=0
+    val optionFour: String?="",
+    val correctOption: Int?=0,
+    val image: Boolean=false
 
 ): Serializable
 

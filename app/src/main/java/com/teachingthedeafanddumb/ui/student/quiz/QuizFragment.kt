@@ -2,6 +2,7 @@ package com.teachingthedeafanddumb.ui.student.quiz
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.ImageView
@@ -20,15 +21,15 @@ import kotlinx.android.synthetic.main.fragment_quiz.*
 
 class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
 
-    val args : QuizFragmentArgs by navArgs()
+    val args: QuizFragmentArgs by navArgs()
 
     private var mCurrentPosition: Int = 1
     private var mQuestionList: ArrayList<QuizModel> = ArrayList()
     private var mSelectedOptionPosition: Int = 0
 
-    var correct : Int = 0
-    var wrong : Int= 0
-    var missed : Int= 0
+    var correct: Int = 0
+    var wrong: Int = 0
+    var missed: Int = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -48,6 +49,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
         imgA.setOnClickListener(this)
         imgB.setOnClickListener(this)
         imgC.setOnClickListener(this)
+        imgD.setOnClickListener(this)
         btn_submit.setOnClickListener(this)
     }
 
@@ -68,8 +70,20 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
         progressBar.progress = mCurrentPosition
         tv_progress.text = "$mCurrentPosition" + "/" + progressBar.max
 
-        tv_question.text = question.question
+        if (!question.image) {
+            tv_question.text = question.question
+            img_question.visibility = View.GONE
+            tv_question.visibility = View.VISIBLE
 
+            Log.d("HAZEM" , " HERE ^+_^ " +question.toString())
+        } else {
+            Glide.with(requireContext()).load(question.question)
+                .into(img_question)
+            img_question.visibility = View.VISIBLE
+            tv_question.visibility = View.GONE
+
+            Log.d("HAZEM" , " HERE ^+_asdasdasdasd^")
+        }
         Glide.with(requireContext()).load(question.optionOne)
             .into(imgA)
 
@@ -78,6 +92,9 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
 
         Glide.with(requireContext()).load(question.optionThree)
             .into(imgC)
+
+        Glide.with(requireContext()).load(question.optionFour)
+            .into(imgD)
     }
 
     private fun defaultOptionsView() {
@@ -86,6 +103,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
         chkA.setImageResource(R.drawable.ic_check_off)
         chkB.setImageResource(R.drawable.ic_check_off)
         chkC.setImageResource(R.drawable.ic_check_off)
+        chkD.setImageResource(R.drawable.ic_check_off)
 
     }
 
@@ -102,12 +120,15 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
             R.id.imgC -> {
                 selectedOptionView(chkC, 3)
             }
+            R.id.imgD -> {
+                selectedOptionView(chkD, 4)
+            }
             R.id.btn_submit -> {
 
                 if (mSelectedOptionPosition == 0) {
 
                     if (btn_submit.text == getString(R.string.submit))
-                        missed+=1
+                        missed += 1
 
                     mCurrentPosition++
 
@@ -142,11 +163,9 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
 
                     if (question!!.correctOption != mSelectedOptionPosition) {
                         //answerView(mSelectedOptionPosition, R.drawable.wrong_option_border_bg)
-                        wrong+=1
-                    }
-                    else
-                    {
-                        correct+=1
+                        wrong += 1
+                    } else {
+                        correct += 1
                     }
 
                     //answerView(question.correctOption!!, R.drawable.correct_option_border_bg)
@@ -171,7 +190,7 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
                         else -> {
 
 
-                            showProgressBar(requireContext() , false)
+                            showProgressBar(requireContext(), false)
 
                             //Send to Db Result
                             val result =
@@ -180,9 +199,9 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
                             result.resultCorrect = correct
                             result.resultMissed = missed
                             result.resultWrong = wrong
-                            result.uid ="id" //FirebaseAuth.getInstance().uid
+                            result.uid = "id" //FirebaseAuth.getInstance().uid
                             result.lessonId = args.lessonModel.id
-                            result.uid_lessonId = "id"+"_"+args.lessonModel.id
+                            result.uid_lessonId = "id" + "_" + args.lessonModel.id
 
                             FirebaseDatabase.getInstance()
                                 .getReference(REF_RESULTS)
@@ -193,9 +212,12 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
 
                                     val bundle = Bundle()
 
-                                    bundle.putSerializable("resultModel" , result)
+                                    bundle.putSerializable("resultModel", result)
 
-                                    findNavController().navigate(R.id.action_quizFragment_to_resultFragment , bundle)
+                                    findNavController().navigate(
+                                        R.id.action_quizFragment_to_resultFragment,
+                                        bundle
+                                    )
 
                                 }
 
@@ -216,7 +238,6 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
 
         check.setImageResource(R.drawable.ic_check_on)
     }
-
 
 
 }
