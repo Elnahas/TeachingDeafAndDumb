@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -38,13 +39,13 @@ import javax.inject.Inject
 class RegisterFragment : Fragment(R.layout.fragment_register) {
 
     var uri: Uri? = null
-    val args : RegisterFragmentArgs by navArgs()
+    val args: RegisterFragmentArgs by navArgs()
 
-    lateinit var firebaseAuth : FirebaseAuth
+    lateinit var firebaseAuth: FirebaseAuth
 
     var refUser = FirebaseDatabase.getInstance().getReference(REF_USERS)
 
-    val viewModel : UserViewModel by viewModels()
+    val viewModel: UserViewModel by viewModels()
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -66,14 +67,14 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             registerUser()
         }
 
-        viewModel.userMutableLiveData.observe(viewLifecycleOwner , Observer {
+        viewModel.userMutableLiveData.observe(viewLifecycleOwner, Observer {
 
-            when(it){
+            when (it) {
 
-                is Resource.Success->{
+                is Resource.Success -> {
                     hideProgressBar()
                     sharedPref.edit()
-                        .putString(Constants.KEY_USER_MODEL_JSON,  Gson().toJson(it.data))
+                        .putString(Constants.KEY_USER_MODEL_JSON, Gson().toJson(it.data))
                         .apply()
 
 //                    val navOptions = NavOptions.Builder()
@@ -85,18 +86,21 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 //                        savedInstanceState,
 //                        navOptions
 //                    )
-                    navigateFirstTabWithClearStack()
+
+                    if (it.data!!.role == Role.STUDENT)
+                        navigateFirstTabWithClearStack()
+                    else
+                        navigateToStudents()
 
                 }
 
-                is Resource.Loading->{
-                    showProgressBar(requireContext() , false)
+                is Resource.Loading -> {
+                    showProgressBar(requireContext(), false)
                 }
             }
 
         })
     }
-
 
 
     private fun registerUser() {
@@ -116,7 +120,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
 
         }
 
-        viewModel.registerNewUser(userModel , uri)
+        viewModel.registerNewUser(userModel, uri)
 
 
     }
@@ -132,6 +136,17 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
         navController.graph = graph
     }
 
+    fun navigateToStudents() {
+
+        val navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment)
+        val navHostFragment: NavHostFragment =
+            requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.nav_graph_home)
+        graph.startDestination = R.id.studentFragment
+
+        navController.graph = graph
+    }
 
     private fun changePhotoUser() {
 
@@ -139,7 +154,7 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
             .setAspectRatio(1, 1)
             .setRequestedSize(250, 250)
             .setCropShape(CropImageView.CropShape.OVAL)
-            .start(requireContext()!!,this)
+            .start(requireContext()!!, this)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

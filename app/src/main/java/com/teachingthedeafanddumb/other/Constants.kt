@@ -27,4 +27,5 @@ object Constants {
 
     const val FOLDER_PROFILE_IMAGE = "profile_image"
 
+    const val REF_USER = "User"
 }

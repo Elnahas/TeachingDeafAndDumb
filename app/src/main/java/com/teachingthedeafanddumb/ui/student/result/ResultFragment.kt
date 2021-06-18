@@ -30,6 +30,7 @@ class ResultFragment : Fragment(R.layout.fragment_result) {
 
         btn_home.setOnClickListener {
 
+            findNavController().navigate(R.id.action_resultFragment_to_homeFragment)
 
         }
 

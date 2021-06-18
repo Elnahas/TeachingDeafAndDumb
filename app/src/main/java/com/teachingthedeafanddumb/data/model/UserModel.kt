@@ -1,6 +1,7 @@
 package com.teachingthedeafanddumb.data.model
 
 import com.teachingthedeafanddumb.data.model.Role
+import java.io.Serializable
 
 
 data class UserModel(
@@ -11,4 +12,4 @@ data class UserModel(
     var token: String? = null,
     var createAt: Any? = null,
     var role: Role? = null
-)
+): Serializable

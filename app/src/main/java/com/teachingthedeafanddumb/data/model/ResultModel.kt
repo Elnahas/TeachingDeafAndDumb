@@ -10,5 +10,6 @@ data class ResultModel(
     var resultWrong:Int=0,
     var resultMissed:Int=0,
     var lessonId:String?=null,
+    var lessonNumber:String?=null,
     var uid_lessonId:String?=null
 ): Serializable

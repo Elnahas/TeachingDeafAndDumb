@@ -1,4 +1,4 @@
-package elnahas.deliveroo.utilits
+package com.teachingthedeafanddumb.utils
 
 import android.content.Context
 import android.graphics.Rect

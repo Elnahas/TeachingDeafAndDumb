@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.teachingthedeafanddumb.R
 import com.teachingthedeafanddumb.data.model.QuizModel
@@ -75,14 +76,12 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
             img_question.visibility = View.GONE
             tv_question.visibility = View.VISIBLE
 
-            Log.d("HAZEM" , " HERE ^+_^ " +question.toString())
         } else {
             Glide.with(requireContext()).load(question.question)
                 .into(img_question)
             img_question.visibility = View.VISIBLE
             tv_question.visibility = View.GONE
 
-            Log.d("HAZEM" , " HERE ^+_asdasdasdasd^")
         }
         Glide.with(requireContext()).load(question.optionOne)
             .into(imgA)
@@ -139,23 +138,6 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
                         else -> {
 
 
-                            //Send to Db Result
-//                            val result = ResultModel()
-//                            result.createAt = System.currentTimeMillis().toString()
-//                            result.resultCorrect = correct
-//                            result.resultMissed = missed
-//                            result.resultWrong = wrong
-//                            result.uid = FirebaseAuth.getInstance().uid
-//                            result.levelId = userModel.levelId
-//                            result.classId = userModel.classId
-//                            result.lessonId = args.lessonModel.id
-//                            result.subjectId = args.lessonModel.subjectId
-//
-//                            viewModel.sendResult(result, args.lessonModel.subjectId!! , args.lessonModel.id!! , args.lessonModel)
-//
-//
-
-
                         }
                     }
                 } else {
@@ -199,9 +181,10 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
                             result.resultCorrect = correct
                             result.resultMissed = missed
                             result.resultWrong = wrong
-                            result.uid = "id" //FirebaseAuth.getInstance().uid
+                            result.lessonNumber = args.lessonModel.lessonNumber
+                            result.uid =  FirebaseAuth.getInstance().uid
                             result.lessonId = args.lessonModel.id
-                            result.uid_lessonId = "id" + "_" + args.lessonModel.id
+                            result.uid_lessonId = FirebaseAuth.getInstance().uid + "_" + args.lessonModel.id
 
                             FirebaseDatabase.getInstance()
                                 .getReference(REF_RESULTS)

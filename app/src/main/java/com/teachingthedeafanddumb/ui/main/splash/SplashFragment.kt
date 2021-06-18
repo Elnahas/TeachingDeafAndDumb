@@ -17,6 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.google.gson.Gson
 import com.teachingthedeafanddumb.R
+import com.teachingthedeafanddumb.data.model.Role
 import com.teachingthedeafanddumb.data.model.UserModel
 import com.teachingthedeafanddumb.other.Constants
 import com.teachingthedeafanddumb.other.Constants.FIRST_TIME_TOGGLE
@@ -46,6 +47,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         Handler().postDelayed({
 
             checkLoginUser()
+            //findNavController().navigate(R.id.action_splashFragment_to_testFragment)
 
         }, 1000)
 
@@ -115,7 +117,10 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
             .putString(Constants.KEY_USER_MODEL_JSON, Gson().toJson(userModel))
             .apply()
 
+        if (userModel!!.role!! == Role.STUDENT)
         navigateFirstTabWithClearStack()
+        else
+            navigateToStudents()
 
 
 
@@ -130,6 +135,18 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate(R.navigation.nav_graph_home)
         graph.startDestination = R.id.homeFragment
+
+        navController.graph = graph
+    }
+
+    fun navigateToStudents() {
+
+        val navController = Navigation.findNavController(requireActivity() , R.id.nav_host_fragment)
+        val navHostFragment: NavHostFragment =
+            requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.nav_graph_home)
+        graph.startDestination = R.id.studentFragment
 
         navController.graph = graph
     }

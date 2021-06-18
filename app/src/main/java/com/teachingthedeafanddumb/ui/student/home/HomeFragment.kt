@@ -13,7 +13,7 @@ import com.teachingthedeafanddumb.R
 import com.teachingthedeafanddumb.adapters.LessonAdapter
 import com.teachingthedeafanddumb.data.model.LessonModel
 import com.teachingthedeafanddumb.other.Constants.REF_LESSONS
-import elnahas.deliveroo.utilits.SpacingItemDecoration
+import com.teachingthedeafanddumb.utils.SpacingItemDecoration
 import kotlinx.android.synthetic.main.fragment_home.*
 
 

@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.teachingthedeafanddumb.R
+import com.teachingthedeafanddumb.data.model.Role
 import com.teachingthedeafanddumb.data.model.UserModel
 import com.teachingthedeafanddumb.other.Constants
 import com.teachingthedeafanddumb.other.Constants.FIELD_PHONE
@@ -28,7 +30,6 @@ import com.teachingthedeafanddumb.utils.CustomLoading.Companion.hideProgressBar
 import com.teachingthedeafanddumb.utils.CustomLoading.Companion.showProgressBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_otp.*
-import timber.log.Timber
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -107,7 +108,10 @@ class OtpFragment : Fragment(R.layout.fragment_otp) {
                                                         .putString(Constants.KEY_USER_MODEL_JSON,  Gson().toJson(user))
                                                         .apply()
 
+                                                    if (user!!.role == Role.STUDENT)
                                                     navigateFirstTabWithClearStack()
+                                                    else
+                                                        navigateToStudents()
 
 
 
@@ -151,7 +155,6 @@ class OtpFragment : Fragment(R.layout.fragment_otp) {
                         (task.exception as FirebaseAuthInvalidCredentialsException).printStackTrace()
                         Toast.makeText(requireContext(), "Verification failed!", Toast.LENGTH_LONG)
                             .show()
-                        Timber.w("ERORRR + 1212" + task.exception!!.message)
                         if (edt_otp!=null)
                             edt_otp.setText("")
                     }
@@ -199,7 +202,6 @@ class OtpFragment : Fragment(R.layout.fragment_otp) {
                 p0.printStackTrace()
 
                 Toast.makeText(requireContext(), "Verification failed!", Toast.LENGTH_LONG).show()
-                Timber.w("ERORRR + " + p0.message)
                 edt_otp.setText("")
                 //txt_timer_to_resend.isEnabled = true
             }
@@ -295,6 +297,19 @@ class OtpFragment : Fragment(R.layout.fragment_otp) {
         val inflater = navHostFragment.navController.navInflater
         val graph = inflater.inflate( R.navigation.nav_graph_home)
         graph.startDestination =  R.id.homeFragment
+
+        navController.graph = graph
+    }
+
+
+    fun navigateToStudents() {
+
+        val navController = Navigation.findNavController(requireActivity() , R.id.nav_host_fragment)
+        val navHostFragment: NavHostFragment =
+            requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val inflater = navHostFragment.navController.navInflater
+        val graph = inflater.inflate(R.navigation.nav_graph_home)
+        graph.startDestination = R.id.studentFragment
 
         navController.graph = graph
     }

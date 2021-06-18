@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -78,7 +79,7 @@ class LessonAdapter() : RecyclerView.Adapter<LessonAdapter.ViewHolder>() {
                 .getInstance()
                 .getReference(Constants.REF_RESULTS)
                 .orderByChild("uid_lessonId")
-                .equalTo("id_"+lessonModel.id)
+                .equalTo(FirebaseAuth.getInstance().uid+"_"+lessonModel.id)
                 .limitToLast(1)
                 .addListenerForSingleValueEvent(object:ValueEventListener{
                     override fun onCancelled(error: DatabaseError) {
