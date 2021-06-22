@@ -34,8 +34,6 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
 
     @Inject
     lateinit var sharedPref: SharedPreferences
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,10 +43,7 @@ class SplashFragment : Fragment(R.layout.fragment_splash) {
         )
 
         Handler().postDelayed({
-
             checkLoginUser()
-            //findNavController().navigate(R.id.action_splashFragment_to_testFragment)
-
         }, 1000)
 
         viewModel.isUserExistsMutableLiveData.observe(viewLifecycleOwner,

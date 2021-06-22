@@ -39,20 +39,16 @@ class OtpFragment : Fragment(R.layout.fragment_otp) {
 
     var refUser = FirebaseDatabase.getInstance().getReference(REF_USERS)
 
-
     lateinit var auth: FirebaseAuth
 
     val args: OtpFragmentArgs by navArgs()
 
     lateinit var phoneNumber: String
 
-    //lateinit var countDownTimer: CountDownTimer
-
     private var storedVerificationId = ""
 
     lateinit var verificationCallBack: PhoneAuthProvider.OnVerificationStateChangedCallbacks
     private  var resendToken: PhoneAuthProvider.ForceResendingToken? = null
-
 
     @Inject
     lateinit var sharedPref: SharedPreferences
@@ -273,22 +269,6 @@ class OtpFragment : Fragment(R.layout.fragment_otp) {
             verificationCallBack
         ) // OnVerificationStateChangedCallbacks
     }
-
-
-    fun resendVerificationCode(number: String, token: PhoneAuthProvider.ForceResendingToken) {
-
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-            number,        // Phone number to verify
-            60,                 // Timeout duration
-            TimeUnit.SECONDS,   // Unit of timeout
-            requireActivity(),               // Activity (for callback binding)
-            verificationCallBack,         // OnVerificationStateChangedCallbacks
-            token // ForceResendingToken from callbacks
-        );
-
-    }
-
-
 
     fun navigateFirstTabWithClearStack() {
         val navController = findNavController()

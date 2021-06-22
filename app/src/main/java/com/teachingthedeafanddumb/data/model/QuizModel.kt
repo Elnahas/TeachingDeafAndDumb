@@ -10,7 +10,8 @@ data class QuizModel(
     val optionThree: String?="",
     val optionFour: String?="",
     val correctOption: Int?=0,
-    val image: Boolean=false
+    val image: Boolean=false,
+    val text: Boolean=false
 
 ): Serializable
 

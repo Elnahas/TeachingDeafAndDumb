@@ -45,18 +45,21 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
         progressBar.max = mQuestionList!!.size
         setQuestion()
 
-
-
         imgA.setOnClickListener(this)
         imgB.setOnClickListener(this)
         imgC.setOnClickListener(this)
         imgD.setOnClickListener(this)
+
+        txtA.setOnClickListener(this)
+        txtB.setOnClickListener(this)
+        txtC.setOnClickListener(this)
+        txtD.setOnClickListener(this)
+
         btn_submit.setOnClickListener(this)
     }
 
     @SuppressLint("SetTextI18n")
     private fun setQuestion() {
-
 
         val question = mQuestionList!![mCurrentPosition - 1]
 
@@ -83,17 +86,50 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
             tv_question.visibility = View.GONE
 
         }
-        Glide.with(requireContext()).load(question.optionOne)
-            .into(imgA)
 
-        Glide.with(requireContext()).load(question.optionTwo)
-            .into(imgB)
+        if (question.text)
+        {
+            txtA.text = question.optionOne
+            txtB.text = question.optionTwo
+            txtC.text = question.optionThree
+            txtD.text = question.optionFour
 
-        Glide.with(requireContext()).load(question.optionThree)
-            .into(imgC)
+            txtA.visibility = View.VISIBLE
+            txtB.visibility = View.VISIBLE
+            txtC.visibility = View.VISIBLE
+            txtD.visibility = View.VISIBLE
 
-        Glide.with(requireContext()).load(question.optionFour)
-            .into(imgD)
+            imgA.visibility = View.INVISIBLE
+            imgB.visibility = View.INVISIBLE
+            imgC.visibility = View.INVISIBLE
+            imgD.visibility = View.INVISIBLE
+        }
+        else
+        {
+            Glide.with(requireContext()).load(question.optionOne)
+                .into(imgA)
+
+            Glide.with(requireContext()).load(question.optionTwo)
+                .into(imgB)
+
+            Glide.with(requireContext()).load(question.optionThree)
+                .into(imgC)
+
+            Glide.with(requireContext()).load(question.optionFour)
+                .into(imgD)
+
+            txtA.visibility = View.INVISIBLE
+            txtB.visibility = View.INVISIBLE
+            txtC.visibility = View.INVISIBLE
+            txtD.visibility = View.INVISIBLE
+
+            imgA.visibility = View.VISIBLE
+            imgB.visibility = View.VISIBLE
+            imgC.visibility = View.VISIBLE
+            imgD.visibility = View.VISIBLE
+        }
+
+
     }
 
     private fun defaultOptionsView() {
@@ -110,18 +146,19 @@ class QuizFragment : Fragment(R.layout.fragment_quiz), View.OnClickListener {
 
 
         when (v?.id) {
-            R.id.imgA -> {
+            R.id.imgA , R.id.txtA  -> {
                 selectedOptionView(chkA, 1)
             }
-            R.id.imgB -> {
+            R.id.imgB , R.id.txtB-> {
                 selectedOptionView(chkB, 2)
             }
-            R.id.imgC -> {
+            R.id.imgC , R.id.txtC -> {
                 selectedOptionView(chkC, 3)
             }
-            R.id.imgD -> {
+            R.id.imgD , R.id.txtD -> {
                 selectedOptionView(chkD, 4)
             }
+
             R.id.btn_submit -> {
 
                 if (mSelectedOptionPosition == 0) {

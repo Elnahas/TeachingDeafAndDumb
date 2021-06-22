@@ -77,16 +77,6 @@ class RegisterFragment : Fragment(R.layout.fragment_register) {
                         .putString(Constants.KEY_USER_MODEL_JSON, Gson().toJson(it.data))
                         .apply()
 
-//                    val navOptions = NavOptions.Builder()
-//                        .setPopUpTo(R.id.registerFragment, true)
-//                        .setPopUpTo(R.id.loginFragment, true)
-//                        .build()
-//                    findNavController().navigate(
-//                        R.id.action_registerFragment_to_restaurantFragment,
-//                        savedInstanceState,
-//                        navOptions
-//                    )
-
                     if (it.data!!.role == Role.STUDENT)
                         navigateFirstTabWithClearStack()
                     else
